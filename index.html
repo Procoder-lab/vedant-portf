@@ -51,45 +51,6 @@
             overflow-x: hidden;
         }
 
-        /* Custom Cursor (Desktops Only) */
-        @media (min-width: 901px) {
-            * {
-                cursor: none;
-            }
-
-            #custom-cursor {
-                position: fixed;
-                width: 12px;
-                height: 12px;
-                background: #fff;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transform: translate(-50%, -50%);
-                mix-blend-mode: difference;
-            }
-
-            #custom-cursor-follower {
-                position: fixed;
-                width: 40px;
-                height: 40px;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9998;
-                transform: translate(-50%, -50%);
-                transition: transform 0.15s ease-out;
-            }
-        }
-
-        @media (max-width: 900px) {
-
-            #custom-cursor,
-            #custom-cursor-follower {
-                display: none !important;
-            }
-        }
-
         header {
             position: fixed;
             top: 0;
@@ -497,8 +458,6 @@
 
 <body>
 
-    <div id="custom-cursor"></div>
-    <div id="custom-cursor-follower"></div>
 
     <header>
         <a href="index.html" class="logo">Vedant's Portfolio.dev</a>
@@ -657,6 +616,7 @@
         window.onerror = function (msg, url, line) {
             alert("Mobile Error: " + msg + " at line " + line);
         };
+
 
         // SUPABASE CONFIGURATION (Insert real keys below)
         const SUPABASE_URL = 'https://pcscuwbjndjclknskohi.supabase.co';
