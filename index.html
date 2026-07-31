@@ -643,31 +643,30 @@
             const container = document.getElementById('projectsContainer');
             if (!container) return;
 
-            if (!dbClient) {
-                container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Please insert your real Supabase URL and Anon Key.</p>';
-                return;
-            }
-
-            container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Loading projects...</p>';
-
             try {
+                // 1. Try fetching from live Supabase DB
                 const { data: projects, error } = await dbClient
                     .from('projects')
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                if (error) {
-                    console.error("Supabase Error:", error);
-                    container.innerHTML = `<p style="color:#ff4444; font-family:var(--font-mono);">Database Error: ${error.message}</p>`;
+                if (!error && projects && projects.length > 0) {
+                    window.currentProjects = projects;
+                    renderProjectsList(window.currentProjects);
                     return;
                 }
-
-                window.currentProjects = projects || [];
-                renderProjectsList(window.currentProjects);
-
             } catch (err) {
-                console.error("Network Catch Error:", err);
-                container.innerHTML = '<p style="color:#ff4444; font-family:var(--font-mono);">Mobile Network Error. Please refresh or turn off Data Saver/Private DNS.</p>';
+                console.log("Supabase direct connection blocked on mobile, switching to local backup JSON...");
+            }
+
+            // 2. FALLBACK: Fetch from local GitHub Pages JSON (100% reliable on mobile)
+            try {
+                const res = await fetch('projects.json');
+                const localProjects = await res.json();
+                window.currentProjects = localProjects;
+                renderProjectsList(window.currentProjects);
+            } catch (jsonErr) {
+                container.innerHTML = '<p style="color:#ff4444;">Failed to load projects.</p>';
             }
         }
 
