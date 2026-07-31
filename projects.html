@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vedant | All Projects</title>
-
+  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+  
   <script src="projects-data.js"></script>
 
   <style>
     :root {
-      --bg-color: #0f111a;
-      --card-bg: #1a1d2d;
+      --bg-color: #0d0f17;
+      --card-bg: #161926;
       --accent: #6c5ce7;
+      --accent-glow: rgba(108, 92, 231, 0.4);
       --text: #ffffff;
       --text-muted: #a0a5b5;
       --font-mono: 'Fira Code', monospace;
@@ -32,6 +32,8 @@
       font-family: system-ui, -apple-system, sans-serif;
       padding: 20px;
       user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     }
 
     header {
@@ -40,24 +42,36 @@
       align-items: center;
       max-width: 1100px;
       margin: 0 auto 40px auto;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       padding-bottom: 20px;
+      animation: fadeInDown 0.8s ease-out;
     }
 
     .brand-title {
       font-size: 1.5rem;
       font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .btn {
       background: var(--accent);
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      padding: 10px 22px;
+      border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
       font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px var(--accent-glow);
     }
 
     .projects-grid {
@@ -70,11 +84,19 @@
 
     .project-card {
       background: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.06);
       display: flex;
       flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
     }
 
     .project-img {
@@ -83,12 +105,18 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 15px;
-      background-color: #121420;
+      background-color: #11131e;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.02);
     }
 
     .project-title {
       font-size: 1.25rem;
       margin-bottom: 10px;
+      color: #fff;
     }
 
     .project-desc {
@@ -100,12 +128,13 @@
     }
 
     pre {
-      background: #11131f;
+      background: #0f111a;
       padding: 14px;
       border-radius: 8px;
       overflow-x: auto;
       font-size: 0.85rem;
       max-height: 180px;
+      border: 1px solid rgba(255,255,255,0.05);
       font-family: var(--font-mono);
     }
 
@@ -114,13 +143,22 @@
       padding: 30px;
       color: var(--text-muted);
       font-size: 0.9rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255,255,255,0.05);
       max-width: 1100px;
       margin: 0 auto;
     }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-
 <body>
 
   <header>
@@ -192,7 +230,7 @@
             src="${imgUrl}" 
             alt="${project.title}" 
             class="project-img" 
-            onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1e2e/ffffff?text=Project+Preview';" 
+            onerror="this.onerror=null; this.src='https://placehold.co/600x400/161926/ffffff?text=Project+Preview';" 
           />
           <h3 class="project-title">${project.title}</h3>
           <p class="project-desc">${project.description || ''}</p>
@@ -212,7 +250,7 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Security Inspection Blocker
+    // High Security Inspection Blocker
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('keydown', (e) => {
       if (
@@ -228,5 +266,4 @@
     window.addEventListener('DOMContentLoaded', fetchProjectsFromDatabase);
   </script>
 </body>
-
 </html>
