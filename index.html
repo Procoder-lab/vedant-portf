@@ -1,311 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vedant | Developer Portfolio</title>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script src="projects-data.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vedant Dhake — Developer Portfolio</title>
+    <script src="projects-data.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
 
-  <style>
-    :root {
-      --bg-color: #0d0f17;
-      --card-bg: #161926;
-      --accent: #6c5ce7;
-      --accent-glow: rgba(108, 92, 231, 0.4);
-      --text: #ffffff;
-      --text-muted: #a0a5b5;
-      --font-mono: 'Fira Code', monospace;
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        if (typeof supabase === 'undefined') {
+            document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>');
+        }
+    </script>
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text);
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      user-select: none; /* Security: Disables text copying */
-      -webkit-user-select: none;
-      -ms-user-select: none;
-    }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto 40px auto;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-bottom: 20px;
-      animation: fadeInDown 0.8s ease-out;
-    }
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0e0e10;
+            --surface-border: rgba(255, 255, 255, 0.12);
+            --text: #ffffff;
+            --text-muted: #888888;
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
 
-    .brand-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 15px;
-    }
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
 
-    .btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 12px var(--accent-glow);
-    }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(16px);
+            background: rgba(5, 5, 5, 0.85);
+            border-bottom: 1px solid var(--surface-border);
+        }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px var(--accent-glow);
-    }
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .section-title {
-      max-width: 1100px;
-      margin: 0 auto 25px auto;
-      font-size: 1.4rem;
-      color: var(--text-muted);
-      animation: fadeIn 1s ease-out;
-    }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 25px;
-      max-width: 1100px;
-      margin: 0 auto 50px auto;
-    }
+        .nav-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
 
-    /* Card Animations & Smooth Hover Effects */
-    .project-card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      animation: fadeInUp 0.8s ease-out;
-      position: relative;
-      overflow: hidden;
-    }
+        .nav-link:hover {
+            color: var(--text);
+        }
 
-    .project-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
-    }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 2rem 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-    .project-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      background-color: #11131e;
-      transition: transform 0.3s ease;
-    }
+        .hero-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--surface-border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            width: fit-content;
+            background: var(--surface);
+        }
 
-    .project-card:hover .project-img {
-      transform: scale(1.02);
-    }
+        .hero-badge span {
+            width: 8px;
+            height: 8px;
+            background: #00ff66;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #00ff66;
+        }
 
-    .project-title {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 6.5rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            word-break: break-word;
+        }
 
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 15px;
-      flex-grow: 1;
-    }
+        .hero-title span {
+            -webkit-text-stroke: 1px #fff;
+            color: transparent;
+        }
 
-    pre {
-      background: #0f111a;
-      padding: 14px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      max-height: 180px;
-      border: 1px solid rgba(255,255,255,0.05);
-      font-family: var(--font-mono);
-    }
+        .hero-sub {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 650px;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
-    /* Keyframe Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+        .btn {
+            padding: 0.8rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .btn-white {
+            background: var(--text);
+            color: var(--bg);
+            border: 1px solid var(--text);
+        }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--surface-border);
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--surface-border);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 2.5rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image-card {
+            width: 100%;
+            height: 380px;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .about-image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            padding: 1.8rem 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .skill-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .skill-name {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .projects-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 260px;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            padding: 1rem;
+        }
+
+        .modal-box {
+            background: #0a0a0c;
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 750px;
+            padding: 1.8rem;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 6px;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        footer {
+            background: #000;
+            border-top: 1px solid var(--surface-border);
+            padding: 4rem 2rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-left h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-left p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-icons a {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .about-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .about-image-card {
+                height: 300px;
+            }
+
+            .hero {
+                padding-top: 9rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="brand-title">VEDANT PORTFOLIO</div>
-    <div class="nav-links">
-      <a href="projects.html" class="btn">Projects</a>
+
+    <header>
+        <a href="index.html" class="logo">Vedant's Portfolio.dev</a>
+        <ul class="nav-links">
+            <li><a href="#about" class="nav-link">01 // About</a></li>
+            <li><a href="#skills" class="nav-link">02 // Skills</a></li>
+            <li><a href="projects.html" class="nav-link">03 // Archive <i class="fa-solid fa-arrow-right"></i></a></li>
+        </ul>
+    </header>
+
+    <main class="hero">
+        <div class="hero-badge">
+            <span></span> Available for technical projects
+        </div>
+        <h1 class="hero-title">Vedant <span>Dhake</span></h1>
+        <p class="hero-sub">
+            1st-Year B.Tech Student studying in Mumbai, originally from Bhusawal. Learning computer science principles,
+            logic building, and web development hands-on.
+        </p>
+        <div class="btn-group">
+            <a href="projects.html" class="btn btn-white">Explore Work <i class="fa-solid fa-arrow-right"></i></a>
+            <button class="btn btn-outline" onclick="openUploadModal()">+ Upload Project</button>
+        </div>
+    </main>
+
+    <section id="about">
+        <div class="section-label">01 // Biography</div>
+        <h2 class="section-heading">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Hi, I’m <strong style="color:#fff;">Vedant Dhake</strong>, a dedicated 1st-year B.Tech engineering
+                    student currently pursuing my degree in Mumbai and hailing from Bhusawal.</p>
+                <p>Driven by curiosity for software development, I have established a strong foundational baseline in
+                    programming languages including <strong style="color:#fff;">C, C++, and Python</strong>, combined
+                    with frontend foundations in <strong style="color:#fff;">HTML5, CSS3, and JavaScript</strong>.</p>
+            </div>
+            <div class="about-image-card">
+                <img src="vedant-photo.jpg" alt="Vedant Dhake" />
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-label">02 // Technical Stack</div>
+        <h2 class="section-heading">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card"><i class="fa-solid fa-code"></i>
+                <div class="skill-name">C Language</div>
+            </div>
+            <div class="skill-card"><i class="fa-solid fa-terminal"></i>
+                <div class="skill-name">C++</div>
+            </div>
+            <div class="skill-card"><i class="fa-brands fa-python"></i>
+                <div class="skill-name">Python</div>
+            </div>
+            <div class="skill-card"><i class="fa-brands fa-html5"></i>
+                <div class="skill-name">HTML5</div>
+            </div>
+            <div class="skill-card"><i class="fa-brands fa-css3-alt"></i>
+                <div class="skill-name">CSS3</div>
+            </div>
+            <div class="skill-card"><i class="fa-brands fa-js"></i>
+                <div class="skill-name">JavaScript</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="projects-top">
+            <div>
+                <div class="section-label">03 // Featured Works</div>
+                <h2 class="section-heading" style="margin-bottom:0;">Projects</h2>
+            </div>
+            <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+                <a href="projects.html" class="btn btn-outline">View Archive <i class="fa-solid fa-arrow-right"></i></a>
+                <button class="btn btn-white" onclick="openUploadModal()">+ Upload</button>
+            </div>
+        </div>
+
+        <div class="projects-grid" id="projectsContainer"></div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-left">
+                <h3>Vedant Dhake</h3>
+                <p>1st Year B.Tech Student • Mumbai / Bhusawal</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <a href="#about">About Me</a>
+                <a href="#skills">Skills</a>
+                <a href="projects.html">Projects Archive</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('uploadModal')">&times;</button>
+            <h3 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:1.2rem;">UPLOAD PROJECT</h3>
+            <form onsubmit="handleUpload(event)">
+                <div class="form-group"><label>Project Title</label><input type="text" id="pTitle" required
+                        placeholder="e.g. Portfolio v1" /></div>
+                <div class="form-group"><label>Description</label><textarea id="pDesc" rows="3" required
+                        placeholder="Brief detail about what you built..."></textarea></div>
+                <div class="form-group"><label>Upload Screenshot / Image File</label><input type="file" id="pImageFile"
+                        accept="image/*" required style="padding:0.6rem;" /></div>
+                <div class="form-group"><label>Code Snippet</label><textarea id="pCode" rows="4" required
+                        placeholder="// Paste your project code here"></textarea></div>
+                <button type="submit" class="btn btn-white" style="width:100%; justify-content:center;">Save to
+                    Portfolio</button>
+            </form>
+        </div>
     </div>
-  </header>
 
-  <main>
-    <h2 class="section-title">Featured Work</h2>
-    <div id="projectsContainer" class="projects-grid">
-      <p style="color:var(--text-muted);">Loading projects...</p>
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('viewModal')">&times;</button>
+            <h3 id="viewTitle" style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:1.2rem;">PROJECT
+                DETAILS</h3>
+
+            <div style="display:flex; gap:0.8rem; border-bottom:1px solid var(--surface-border); margin-bottom:1.2rem;">
+                <button class="btn btn-outline" id="tabOutput" onclick="switchModalTab('output')">Project
+                    Preview</button>
+                <button class="btn btn-outline" id="tabCode" onclick="switchModalTab('code')">Source Code</button>
+            </div>
+
+            <div id="modalOutputContent">
+                <div
+                    style="width: 100%; max-height: 400px; border: 1px solid var(--surface-border); border-radius: 8px; overflow: hidden; background: #000; display:flex; justify-content:center; align-items:center;">
+                    <img id="projectPreviewImage" src="" alt="Project Screenshot"
+                        style="width:100%; height:100%; object-fit:contain; max-height:400px;" />
+                </div>
+            </div>
+
+            <div id="modalCodeContent" style="display:none;">
+                <div class="terminal-code" id="terminalCodeSnippet"
+                    style="background:#000; padding:1rem; border-radius:8px; font-family:var(--font-mono); color:#00ff66; white-space:pre-wrap; max-height:300px; overflow-y:auto; font-size:0.8rem;">
+                </div>
+            </div>
+        </div>
     </div>
-  </main>
 
-  <footer>
-    &copy; Vedant. All Rights Reserved.
-  </footer>
+    <script>
 
-  <script>
-    // ----------------------------------------------------
-    // 1. SUPABASE CLIENT CONFIGURATION
-    // ----------------------------------------------------
-    const SUPABASE_URL = 'https://pcscuwbjndjclknskohi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjc2N1d2JqbmRqY2xrbnNrb2hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MDE4MDQsImV4cCI6MjEwMDk3NzgwNH0.3ubU4CAxiTkG9GzG_BWgW7Wbth0ZPBpmaDpO5r-rDrY';
+        //mobile error handler 
+        window.onerror = function (msg, url, line) {
+            alert("Mobile Error: " + msg + " at line " + line);
+        };
 
-    let dbClient = null;
-    if (typeof supabase !== 'undefined' && SUPABASE_URL !== '') {
-      dbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: { persistSession: false },
-        global: { headers: { 'x-application-name': 'portfolio-web-app' } }
-      });
-    }
+        // SUPABASE CONFIGURATION
+        const SUPABASE_URL = 'https://pcscuwbjndjclknskohi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjc2N1d2JqbmRqY2xrbnNrb2hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MDE4MDQsImV4cCI6MjEwMDk3NzgwNH0.3ubU4CAxiTkG9GzG_BWgW7Wbth0ZPBpmaDpO5r-rDrY';
+        const ADMIN_PASSWORD = "DISHAVEDANT";
 
-    // ----------------------------------------------------
-    // 2. FETCH PROJECTS (HYBRID AUTOMATIC FALLBACK FOR MOBILE)
-    // ----------------------------------------------------
-    async function fetchProjectsFromDatabase() {
-      const container = document.getElementById('projectsContainer');
-      if (!container) return;
+        let dbClient = null;
 
-      // 1. Try Supabase First (PC / Desktop)
-      if (dbClient) {
-        try {
-          const { data: projects, error } = await dbClient
-            .from('projects')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-          if (!error && projects && projects.length > 0) {
-            renderProjectsList(projects);
-            return;
-          }
-        } catch (err) {
-          console.log("Mobile carrier blocked Supabase API. Utilizing local backup...");
+        if (typeof supabase !== 'undefined' && SUPABASE_URL !== '') {
+            dbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: { persistSession: false },
+                global: {
+                    headers: {
+                        'x-application-name': 'portfolio-web-app'
+                    }
+                }
+            });
         }
-      }
 
-      // 2. Automatic Local Fallback (100% Reliable on Mobile)
-      if (window.localProjectsBackup && window.localProjectsBackup.length > 0) {
-        renderProjectsList(window.localProjectsBackup);
-      } else {
-        container.innerHTML = '<p style="color:var(--text-muted);">No projects available.</p>';
-      }
-    }
+        window.currentProjects = [];
 
-    // ----------------------------------------------------
-    // 3. RENDER PROJECTS LIST
-    // ----------------------------------------------------
-    function renderProjectsList(projects) {
-      const container = document.getElementById('projectsContainer');
-      container.innerHTML = '';
+        document.addEventListener('DOMContentLoaded', fetchProjectsFromDatabase);
 
-      projects.forEach(project => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
+        async function fetchProjectsFromDatabase() {
+            const container = document.getElementById('projectsContainer');
+            if (!container) return;
 
-        const imgUrl = project.image_url || './bg-img.jpg';
+            container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Loading projects...</p>';
 
-        card.innerHTML = `
-          <img 
-            src="${imgUrl}" 
-            alt="${project.title}" 
-            class="project-img" 
-            onerror="this.onerror=null; this.src='https://placehold.co/600x400/161926/ffffff?text=Project+Preview';" 
-          />
-          <h3 class="project-title">${project.title}</h3>
-          <p class="project-desc">${project.description || ''}</p>
-          ${project.code_snippet ? `<pre><code>${escapeHtml(project.code_snippet)}</code></pre>` : ''}
+            // 1. TRY SUPABASE FIRST (Works on PC)
+            if (dbClient) {
+                try {
+                    const { data: projects, error } = await dbClient
+                        .from('projects')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && projects && projects.length > 0) {
+                        window.currentProjects = projects;
+                        renderProjectsList(window.currentProjects);
+                        return; // Successfully loaded from Supabase!
+                    }
+                } catch (err) {
+                    console.log("Mobile carrier blocked Supabase API. Switching to automatic local backup...");
+                }
+            }
+
+            // 2. AUTOMATIC FALLBACK FOR MOBILE (Loads local backup with ZERO network errors)
+            if (window.localProjectsBackup && window.localProjectsBackup.length > 0) {
+                window.currentProjects = window.localProjectsBackup;
+                renderProjectsList(window.currentProjects);
+            } else {
+                container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">No projects available.</p>';
+            }
+        }
+
+        function renderProjectsList(projects) {
+            const container = document.getElementById('projectsContainer');
+            container.innerHTML = '';
+
+            if (!projects || projects.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">No projects uploaded yet.</p>';
+                return;
+            }
+
+            projects.forEach((p, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+          <div>
+            <div class="project-title">${p.title}</div>
+            <div class="project-desc">${p.description}</div>
+          </div>
+          <button class="btn btn-outline" onclick="openProjectByIndex(${index})">View Details</button>
         `;
+                container.appendChild(card);
+            });
+        }
 
-        container.appendChild(card);
-      });
-    }
+        function openProjectByIndex(index) {
+            const project = window.currentProjects[index];
+            if (!project) return;
 
-    function escapeHtml(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+            document.getElementById('viewTitle').innerText = project.title;
+            document.getElementById('projectPreviewImage').src = project.image_url || project.demo_url || '';
+            document.getElementById('terminalCodeSnippet').innerText = project.code_snippet || '// No code provided';
 
-    // ----------------------------------------------------
-    // 4. HIGH SECURITY INSPECTION BLOCKER
-    // ----------------------------------------------------
-    // Block Right-Click Context Menu
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
+            switchModalTab('output');
+            document.getElementById('viewModal').style.display = 'flex';
+        }
 
-    // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
-    document.addEventListener('keydown', (e) => {
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'j' || e.key === 'J' || e.key === 'i')) ||
-        (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S'))
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    });
+        function openUploadModal() {
+            const userPass = prompt("Enter Admin Password to Upload Projects:");
+            if (userPass === ADMIN_PASSWORD) {
+                document.getElementById('uploadModal').style.display = 'flex';
+            } else if (userPass !== null) {
+                alert("Unauthorized access! Incorrect password.");
+            }
+        }
 
-    // Initialize Fetch on Page Load
-    window.addEventListener('DOMContentLoaded', fetchProjectsFromDatabase);
-  </script>
+        async function handleUpload(e) {
+            e.preventDefault();
+            if (!dbClient) return alert('Configure Supabase credentials first!');
+
+            const title = document.getElementById('pTitle').value;
+            const description = document.getElementById('pDesc').value;
+            const fileInput = document.getElementById('pImageFile');
+            const code_snippet = document.getElementById('pCode').value;
+
+            if (!fileInput.files || fileInput.files.length === 0) return alert('Select an image file!');
+
+            const file = fileInput.files[0];
+            const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+
+            try {
+                const { error: uploadError } = await dbClient.storage.from('project-screenshots').upload(fileName, file);
+                if (uploadError) return alert('Image upload failed: ' + uploadError.message);
+
+                const { data: urlData } = dbClient.storage.from('project-screenshots').getPublicUrl(fileName);
+                const imageUrl = urlData.publicUrl;
+
+                const { error: dbError } = await dbClient.from('projects').insert([{ title, description, image_url: imageUrl, demo_url: imageUrl, code_snippet }]);
+
+                if (dbError) {
+                    alert('Database error: ' + dbError.message);
+                } else {
+                    alert('Project uploaded successfully!');
+                    closeModal('uploadModal');
+                    document.querySelector('#uploadModal form').reset();
+                    fetchProjectsFromDatabase();
+                }
+            } catch (err) {
+                alert('Upload failed.');
+            }
+        }
+
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function switchModalTab(tab) {
+            if (tab === 'output') {
+                document.getElementById('modalOutputContent').style.display = 'block';
+                document.getElementById('modalCodeContent').style.display = 'none';
+            } else {
+                document.getElementById('modalOutputContent').style.display = 'none';
+                document.getElementById('modalCodeContent').style.display = 'block';
+            }
+        }
+
+        // Disable Right-Click Menu
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'u')
+            ) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
+
 </html>
