@@ -300,13 +300,22 @@
   </div>
 
   <script>
+    // SUPABASE CONFIGURATION
     const SUPABASE_URL = 'https://pcscuwbjndjclknskohi.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjc2N1d2JqbmRqY2xrbnNrb2hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MDE4MDQsImV4cCI6MjEwMDk3NzgwNH0.3ubU4CAxiTkG9GzG_BWgW7Wbth0ZPBpmaDpO5r-rDrY';
     const ADMIN_PASSWORD = "DISHAVEDANT";
 
     let dbClient = null;
+
     if (typeof supabase !== 'undefined' && SUPABASE_URL !== '') {
-      dbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      dbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false },
+        global: {
+          headers: {
+            'x-application-name': 'portfolio-web-app'
+          }
+        }
+      });
     }
 
     window.currentProjects = [];
@@ -315,20 +324,34 @@
 
     async function fetchProjectsFromDatabase() {
       const container = document.getElementById('projectsContainer');
+      if (!container) return;
+
       if (!dbClient) {
-        container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Configure Supabase credentials first.</p>';
+        container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Please insert your real Supabase URL and Anon Key.</p>';
         return;
       }
 
-      const { data: projects, error } = await dbClient.from('projects').select('*').order('created_at', { ascending: false });
+      container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Loading projects...</p>';
 
-      if (error) {
-        container.innerHTML = '<p style="color:red; font-family:var(--font-mono);">Failed to fetch projects.</p>';
-        return;
+      try {
+        const { data: projects, error } = await dbClient
+          .from('projects')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error("Supabase Error:", error);
+          container.innerHTML = `<p style="color:#ff4444; font-family:var(--font-mono);">Database Error: ${error.message}</p>`;
+          return;
+        }
+
+        window.currentProjects = projects || [];
+        renderProjectsList(window.currentProjects);
+
+      } catch (err) {
+        console.error("Network Catch Error:", err);
+        container.innerHTML = '<p style="color:#ff4444; font-family:var(--font-mono);">Mobile Network Error. Please refresh or turn off Data Saver/Private DNS.</p>';
       }
-
-      window.currentProjects = projects || [];
-      renderProjectsList(window.currentProjects);
     }
 
     function renderProjectsList(projects) {
