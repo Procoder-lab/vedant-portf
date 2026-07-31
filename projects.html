@@ -8,7 +8,7 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects Archive — Vedant Dhake</title>
-
+  <script src="projects-data.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -326,30 +326,32 @@
       const container = document.getElementById('projectsContainer');
       if (!container) return;
 
-      try {
-        // 1. Try fetching from live Supabase DB
-        const { data: projects, error } = await dbClient
-          .from('projects')
-          .select('*')
-          .order('created_at', { ascending: false });
+      container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">Loading projects...</p>';
 
-        if (!error && projects && projects.length > 0) {
-          window.currentProjects = projects;
-          renderProjectsList(window.currentProjects);
-          return;
+      // 1. TRY SUPABASE FIRST (Works on PC)
+      if (dbClient) {
+        try {
+          const { data: projects, error } = await dbClient
+            .from('projects')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (!error && projects && projects.length > 0) {
+            window.currentProjects = projects;
+            renderProjectsList(window.currentProjects);
+            return; // Successfully loaded from Supabase!
+          }
+        } catch (err) {
+          console.log("Mobile carrier blocked Supabase API. Switching to automatic local backup...");
         }
-      } catch (err) {
-        console.log("Supabase direct connection blocked on mobile, switching to local backup JSON...");
       }
 
-      // 2. FALLBACK: Fetch from local GitHub Pages JSON (100% reliable on mobile)
-      try {
-        const res = await fetch('projects.json');
-        const localProjects = await res.json();
-        window.currentProjects = localProjects;
+      // 2. AUTOMATIC FALLBACK FOR MOBILE (Loads local backup with ZERO network errors)
+      if (window.localProjectsBackup && window.localProjectsBackup.length > 0) {
+        window.currentProjects = window.localProjectsBackup;
         renderProjectsList(window.currentProjects);
-      } catch (jsonErr) {
-        container.innerHTML = '<p style="color:#ff4444;">Failed to load projects.</p>';
+      } else {
+        container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">No projects available.</p>';
       }
     }
 
