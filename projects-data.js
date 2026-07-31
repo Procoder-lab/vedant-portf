@@ -2,7 +2,7 @@ window.localProjectsBackup = [
   {
     title: "LOGIN PAGE FOR BEGINNER",
     description: "A clean login interface designed with HTML5 and CSS3.",
-    image_url: "./projects/login_page/login-page-image.png",
+    image_url: "projects/login_page/login-page-image.png",
     code_snippet: `<!DOCTYPE html>
 <html lang="en">
 <head>
