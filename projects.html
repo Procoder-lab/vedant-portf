@@ -305,7 +305,7 @@
     const ADMIN_PASSWORD = "DISHAVEDANT";
 
     let dbClient = null;
-    if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'https://pcscuwbjndjclknskohi.supabase.co') {
+    if (typeof supabase !== 'undefined' && SUPABASE_URL !== '') {
       dbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
