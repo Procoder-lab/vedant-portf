@@ -227,9 +227,8 @@ body {
 </body>
 </html>`,
   },
-];
 
-window.localProjectsBackup = [
+  // project 2 (Added)
   {
     title: "LOGIN PAGE FOR BEGINNER",
     description: "A clean login interface designed with HTML5 and CSS3.",
