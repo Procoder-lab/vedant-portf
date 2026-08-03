@@ -230,8 +230,8 @@ body {
 
   // project 2 (Added)
   {
-    title: "LOGIN PAGE FOR BEGINNER",
-    description: "A clean login interface designed with HTML5 and CSS3.",
+    title: "Simple Calculator (Python)",
+    description: "I made this and trust me this is too simple for beginner project try it now.",
     image_url: "./projects/calculator/calculator.png",
     code_snippet: `a = int(input("a:"))
 b = int(input("b:")) 
