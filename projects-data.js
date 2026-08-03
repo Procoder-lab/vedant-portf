@@ -2,7 +2,7 @@ window.localProjectsBackup = [
   {
     title: "LOGIN PAGE FOR BEGINNER",
     description: "A clean login interface designed with HTML5 and CSS3.",
-    image_url: "./preview1.jpg",
+    image_url: "./projects/login_page/preview1.jpg",
     code_snippet: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -226,5 +226,31 @@ body {
   </style>
 </body>
 </html>`,
+  },
+];
+
+window.localProjectsBackup = [
+  {
+    title: "LOGIN PAGE FOR BEGINNER",
+    description: "A clean login interface designed with HTML5 and CSS3.",
+    image_url: "./projects/calculator/calculator.png",
+    code_snippet: `a = int(input("a:"))
+b = int(input("b:")) 
+ope = str(input("ope:"))
+
+if(ope) == "add":
+    print("Total:",a + b)
+     
+if(ope) == "sub":
+    print("Total",a - b)
+     
+if(ope) == "mul":
+    print("Total",a * b)
+           
+if(ope) == "div":
+    print("Total",a / b)
+    
+if(ope) == "per":
+    print("Total",a % b)`,
   },
 ];
