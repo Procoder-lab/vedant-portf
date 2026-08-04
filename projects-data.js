@@ -302,7 +302,7 @@ print( a,"x 10 =",table)
   //project 4
 
   {
-    title: "Table Using Python (Extended Version)",
+    title: "Table Using Python (Fastest Version)",
     description:
       "This is the simplest and easiest method or fast to create a table.",
     image_url: "./projects/table-maker/easy-table.png",
