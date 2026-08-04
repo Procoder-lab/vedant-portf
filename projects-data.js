@@ -231,7 +231,8 @@ body {
   // project 2 (Added)
   {
     title: "Simple Calculator (Python)",
-    description: "I made this and trust me this is too simple for beginner project try it now.",
+    description:
+      "I made this and trust me this is too simple for beginner project try it now.",
     image_url: "./projects/calculator/calculator.png",
     code_snippet: `a = int(input("a:"))
 b = int(input("b:")) 
@@ -251,5 +252,91 @@ if(ope) == "div":
     
 if(ope) == "per":
     print("Total",a % b)`,
+  },
+
+  //project 3rd
+
+  {
+    title: "Table Using Python (Extended Version)",
+    description:
+      "This is very expand and long boring method to create a table.",
+    image_url: "./projects/table-maker/table.png",
+    code_snippet: `# Now we are creating a system of Table creating In which user can input his number and 
+    # he will got his maths table.
+
+a = int(input("Enter Number : "))
+
+
+table = ( a*1 )
+print( a,"x 1 =",table)
+
+table = ( a*2 )
+print( a,"x 2 =",table)
+
+table = ( a*3 )
+print( a,"x 3 =",table)
+
+table = ( a*4 )
+print( a,"x 4 =",table)
+
+table = ( a*5 )
+print( a,"x 5 =",table)
+
+table = ( a*6 )
+print( a,"x 6 =",table)
+
+table = ( a*7 )
+print( a,"x 7 =",table)
+
+table = ( a*8 )
+print( a,"x 8 =",table)
+
+table = ( a*9 )
+print( a,"x 9 =",table)
+
+table = ( a*10 )
+print( a,"x 10 =",table)
+`,
+  },
+
+  //project 4
+
+  {
+    title: "Table Using Python (Extended Version)",
+    description:
+      "This is the simplest and easiest method or fast to create a table.",
+    image_url: "./projects/table-maker/easy-table.png",
+    code_snippet: `n = int(input("Enter a number:"))
+    a = 1
+    while a <= 10:
+    print(f"{n} X {a} = {n * a}")
+    a += 1`,
+  },
+
+  //project 5 (Fun Game)
+
+  {
+    title: "Guessing Game (fun)",
+    description: "This game is like a little Fun try it now.",
+    image_url: "./projects/Guessing-game/guess-img.png",
+    code_snippet: `
+    #Make sure that indentation is very important in this type of games.
+    import random
+
+    secret_num = random.randint(1, 100)
+    print("Welcome to the Guessing game")
+    print("I have picked a secret number between 1 and 100")
+    game_over = False
+
+    while not game_over:
+    guess = int(input("Enter your Guess: "))
+    
+        if guess < secret_num:
+          print("To Low Try Again")
+        elif guess > secret_num:
+          print("To High Try Again")
+        else:
+          print(f"Congratulations Your Guessed number is {guess}")            
+          game_over = True `,
   },
 ];
