@@ -651,7 +651,8 @@
                     const { data: projects, error } = await dbClient
                         .from('projects')
                         .select('*')
-                        .order('created_at', { ascending: false });
+                        .order('created_at', { ascending: false })
+                        .limit(3);
 
                     if (!error && projects && projects.length > 0) {
                         window.currentProjects = projects;
@@ -665,7 +666,7 @@
 
             // 2. AUTOMATIC FALLBACK FOR MOBILE (Loads local backup with ZERO network errors)
             if (window.localProjectsBackup && window.localProjectsBackup.length > 0) {
-                window.currentProjects = window.localProjectsBackup;
+                window.currentProjects = window.localProjectsBackup.slice(0,3);
                 renderProjectsList(window.currentProjects);
             } else {
                 container.innerHTML = '<p style="color:var(--text-muted); font-family:var(--font-mono);">No projects available.</p>';
