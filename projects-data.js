@@ -372,7 +372,7 @@ print("Your Password is:",password)`,
     title: "Guessing game V2 (python)",
     description:
       "This is the simplest begineer level understandable code V2",
-    image_url: "./projects/Guessing_gameV2/V2_game.png",
+    image_url: "./projects/Guessing-game/Guessing_gameV2/V2_game.png",
     code_snippet: `#Guessing game V2
 
 import random
