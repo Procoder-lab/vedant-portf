@@ -344,7 +344,8 @@ print( a,"x 10 =",table)
 
   {
     title: "Random Password Generator(python)",
-    description: "This code will give you infinite password combination with 12 digits.",
+    description:
+      "This code will give you infinite password combination with 12 digits.",
     image_url: "./projects/pass_generator/pass_gene.png",
     code_snippet: `# Random Password Generator
 
@@ -363,5 +364,30 @@ for i in range(pass_len):
     password += random.choice(whole)
     
 print("Your Password is:",password)`,
+  },
+
+  //Project 7 (Guessing game V2)
+
+  {
+    title: "Guessing game V2 (python)",
+    description:
+      "This is the simplest begineer level understandable code V2",
+    image_url: "./projects/Guessing_gameV2/V2_game.png",
+    code_snippet: `#Guessing game V2
+
+import random
+
+target = random.randint(1, 100)  
+
+while True:
+    user = int(input("Enter Your Guess:"))
+    
+    if(user == target):
+        print("Congrats! Your Guess is",user)
+        break
+    elif(user > target):
+        print("Your guess is too high! Try again")
+    else:
+        print("Your guess is too small! Try again")`,
   },
 ];
